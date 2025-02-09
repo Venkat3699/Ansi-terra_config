@@ -4,34 +4,18 @@ resource "aws_security_group" "allow_all" {
   vpc_id      = aws_vpc.default.id
 
   ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["10.1.1.0/32"]
+    cidr_blocks = ["172.31.0.0/16"] # Replace with your actual Ansible Controller Ip 
   }
 
   ingress {
-    from_port   = 3389
-    to_port     = 3389
-    protocol    = "tcp"
-    cidr_blocks = ["10.1.1.0/32"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"] # This allows all traffic, adjust as necessary
   }
-
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = ["10.2.1.0/32"]
-  }
-
-
 
   egress {
     from_port   = 0
@@ -39,9 +23,4 @@ resource "aws_security_group" "allow_all" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  # lifecycle {
-  #   ignore_changes = [
-  #     ingress,
-  #   ]
-  # }
 }

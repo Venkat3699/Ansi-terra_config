@@ -10,7 +10,7 @@ resource "aws_instance" "webservers" {
   count                       = 3
   ami                         = data.aws_ami.my_ami.id
   instance_type               = lookup(var.instance_type, local.new_environment)
-  key_name                    = var.key_name
+  key_name                    = aws_key_pair.ansible.key_name
   subnet_id                   = element(aws_subnet.public-subnets.*.id, count.index)
   vpc_security_group_ids      = ["${aws_security_group.allow_all.id}"]
   associate_public_ip_address = true
